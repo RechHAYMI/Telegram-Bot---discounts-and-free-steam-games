@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    image: postgres:15-alpine
+    container_name: games_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: my_secret_password
+      POSTGRES_DB: discount_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+ 
+  #api:
+   # build: ./api  # Dockerfile для API должен лежать в папке /api
+   # container_name: games_api
+   # restart: always
+    #depends_on:
+    #  - postgres_db
+    #environment:
+      #- DB_URL=postgresql+asyncpg://admin:my_secret_password@postgres_db:5432/discount_db
+    #ports:
+     # - "8000:8000"
+
+ 
+  #bot:
+   # build: ./bot  
+    #container_name: games_bot
+    #restart: always
+    #epends_on:
+     # - api
+   # environment:
+      #- BOT_TOKEN=твой_токен_от_botfather
+     ##env_file:
+     # - .env
+
+volumes:
+  pgdata:
