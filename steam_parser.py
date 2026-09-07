@@ -24,19 +24,22 @@ def transform_deal_data(deal: dict):
         "steam_id": int(deal["steamAppID"]),
         "price_usd": float(deal["salePrice"]),
         "discount_percent": int(float(deal["savings"])),
-        "title": deal["title"]
+        "title": deal["title"],
+        "url": f"https://store.steampowered.com/app/{deal['steamAppID']}/",
+        "price_rub": 0.0,
+        "price_kzt": 0.0,
+        "price_uah": 0.0
     }
     return clean_data
 
-
-if __name__ == "__main__":
-    result = asyncio.run(fetch_cheapshark_deals())
+async def get_cleaned_deals():
+    result = await fetch_cheapshark_deals()
     cleaned_games = []
-
     for game in result:
         transform_game = transform_deal_data(game)
         cleaned_games.append(transform_game)
-    #first_deal = result[0]
     print(cleaned_games)
-    #pure_numbers = transform_deal_data(first_deal)
-    #print(pure_numbers)
+    return cleaned_games
+
+if __name__ == "__main__":
+    asyncio.run(get_cleaned_deals())

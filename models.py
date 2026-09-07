@@ -10,7 +10,6 @@ class Game(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     steam_id: Mapped[int] = mapped_column(Integer, unique=True)
     title: Mapped[str] = mapped_column(String)
-    price: Mapped[float] = mapped_column(Float)
     discount_percent: Mapped[int] = mapped_column(Integer)
     url: Mapped[str] = mapped_column(String)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
