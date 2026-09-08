@@ -1,5 +1,6 @@
 import httpx
 import asyncio
+from currency import fetch_exchange_rates
 
 async def fetch_cheapshark_deals():
     url = "https://www.cheapshark.com/api/1.0/deals"
@@ -19,24 +20,26 @@ async def fetch_cheapshark_deals():
         return data
     
 
-def transform_deal_data(deal: dict):
+def transform_deal_data(deal: dict, rates: dict):
+    price_usd = float(deal["salePrice"])
     clean_data = {
         "steam_id": int(deal["steamAppID"]),
         "price_usd": float(deal["salePrice"]),
         "discount_percent": int(float(deal["savings"])),
         "title": deal["title"],
         "url": f"https://store.steampowered.com/app/{deal['steamAppID']}/",
-        "price_rub": 0.0,
-        "price_kzt": 0.0,
-        "price_uah": 0.0
+        "price_rub": round(price_usd * rates["RUB"], 2),
+        "price_kzt": round(price_usd * rates["KZT"], 2),
+        "price_uah": round(price_usd * rates["UAH"], 2),
     }
     return clean_data
 
 async def get_cleaned_deals():
+    rates = await fetch_exchange_rates()
     result = await fetch_cheapshark_deals()
     cleaned_games = []
     for game in result:
-        transform_game = transform_deal_data(game)
+        transform_game = transform_deal_data(game, rates)
         cleaned_games.append(transform_game)
     print(cleaned_games)
     return cleaned_games
