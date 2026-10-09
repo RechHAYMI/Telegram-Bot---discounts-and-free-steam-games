@@ -1,7 +1,9 @@
 import asyncio
+
 from steam_parser import get_cleaned_deals
 from models import Game
 from database import async_session
+
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import update
 

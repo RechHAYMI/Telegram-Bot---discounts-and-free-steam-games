@@ -1,5 +1,7 @@
 import httpx
+
 import asyncio
+
 from currency import fetch_exchange_rates
 
 async def fetch_cheapshark_deals():
