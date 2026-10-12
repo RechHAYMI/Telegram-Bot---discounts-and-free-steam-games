@@ -6,8 +6,9 @@ from pydantic import BaseModel
 from database import async_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import Game
+from aps import lifespan
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 class GameResponse( BaseModel ):
     title: str
