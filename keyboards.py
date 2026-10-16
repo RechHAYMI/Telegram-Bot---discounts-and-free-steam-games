@@ -18,3 +18,13 @@ def start_common_kb():
         [KeyboardButton(text="Back")]                                    
     ]
     return ReplyKeyboardMarkup(keyboard=buttons, resize_keyboard=True)
+
+def get_settings_kb():
+    buttons = [
+        [KeyboardButton(text="10%")],[KeyboardButton(text="20%")],
+        [KeyboardButton(text="30%")],[KeyboardButton(text="40%")],
+        [KeyboardButton(text="50%")],[KeyboardButton(text="60%")],
+        [KeyboardButton(text="70%")],[KeyboardButton(text="80%")],
+        [KeyboardButton(text="90%")],[KeyboardButton(text="100%")]
+    ]
+    return ReplyKeyboardMarkup(keyboard=buttons, resize_keyboard=True)
