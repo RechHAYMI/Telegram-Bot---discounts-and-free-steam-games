@@ -9,7 +9,7 @@ from states import Profile
 
 router = Router()
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", filename="bot.log", encoding="utf-8")
+
 logger = logging.getLogger(__name__)
 
 @router.message(F.text.lower().in_({"start 🚀", "start", "старт"}))
@@ -27,4 +27,4 @@ async def info_handler(message: types.Message):
 @router.message(F.text.lower().in_({"назад", "back"}))
 @router.message(Command("back"))
 async def back_handler(message: types.Message, state: FSMContext):
-    await message.answer(reply_markup=get_main_kb())
+    await message.answer("Ready!",reply_markup=get_main_kb())

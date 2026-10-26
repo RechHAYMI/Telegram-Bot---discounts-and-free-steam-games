@@ -4,8 +4,8 @@ import asyncio
 
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
-
-from middlewares.main_middleware import ShadowMiddleware
+from config import bot
+from handlers import common, discount_on_steam, settings
 from middlewares.ThrottlingMiddleware import ThrottlingMiddleware
 
 logging.basicConfig(
@@ -20,10 +20,9 @@ logger = logging.getLogger(__name__)
 dp = Dispatcher()
 
 async def main():
-    pool = await init_postgres()
-    asyncio.create_task(shadow_parser(pool))
-    await dp.start_polling(bot, pool=pool)
+    dp.include_routers(common.router, discount_on_steam.router, settings.router)
     logger.info("Бот запущен и готов к работе")
+    await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
